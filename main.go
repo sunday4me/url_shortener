@@ -19,7 +19,7 @@ func main() {
 			c.JSON(http.StatusBadRequest, items.ErrorResponse("Invalid URL"))
 			return
 		}
-		urlIndex := utils.GetURLIndex()
+		urlIndex := items.GetURLIndex()
 		if _, ok := urls[urlIndex]; !ok {
 			urls[urlIndex] = url
 		}
