@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"url-shortener/utils"
+	"url-shortener/items"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,8 +15,8 @@ func main() {
 	r.GET("/add", func(c *gin.Context) {
 		url := c.Query("url")
 
-		if len(url) == 0 || !utils.IsUrl(url) {
-			c.JSON(http.StatusBadRequest, utils.ErrorResponse("Invalid URL"))
+		if len(url) == 0 || !items.IsUrl(url) {
+			c.JSON(http.StatusBadRequest, items.ErrorResponse("Invalid URL"))
 			return
 		}
 		urlIndex := utils.GetURLIndex()
@@ -31,10 +31,10 @@ func main() {
 	r.GET("/:index", func(c *gin.Context) {
 		urlIndex := c.Param("index")
 		if _, ok := urls[urlIndex]; !ok {
-			c.JSON(http.StatusNotFound, utils.ErrorResponse("URL not found"))
+			c.JSON(http.StatusNotFound, items.ErrorResponse("URL not found"))
 			return
 		}
-		c.JSON(http.StatusOK, utils.SuccessResonse(map[string]interface{}{
+		c.JSON(http.StatusOK, items.SuccessResonse(map[string]interface{}{
 			"url": urls[urlIndex],
 		}))
 	})
